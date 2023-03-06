@@ -1,5 +1,6 @@
 const UserModel = require("../models/User.model");
-const { signUpService } = require("../services/user.service");
+const { signUpService, loginService } = require("../services/user.service");
+const { generateToken } = require("../utils/generateToken");
 
 exports.signup = async (req, res, next) => {
 
@@ -23,3 +24,29 @@ exports.signup = async (req, res, next) => {
     }
 }
 
+exports.login = async (req, res, next) => {
+
+    try{
+        const user = await loginService(req.body);
+        
+        const isPasswordValid = user.comparePassword(req.body.password, user.password);
+        if(!isPasswordValid){
+            return next(new Error("Invalid Credentials"));
+        }
+        const token = generateToken(user);
+
+        const { password, ...userWithoutPassword } = user.toObject();
+
+        res.status(200).json({
+            success: true,
+            data: {
+                user:userWithoutPassword,
+                token,
+            },
+            message: "User logged in successfully",
+        });
+    }
+    catch(error){
+        next(error);
+    }
+}
