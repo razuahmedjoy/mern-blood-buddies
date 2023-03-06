@@ -1,5 +1,5 @@
 const UserModel = require("../models/User.model");
-const { signUpService, loginService } = require("../services/user.service");
+const { signUpService, loginService, updateUserService } = require("../services/user.service");
 const { generateToken } = require("../utils/generateToken");
 
 exports.signup = async (req, res, next) => {
@@ -47,6 +47,40 @@ exports.login = async (req, res, next) => {
         });
     }
     catch(error){
+        next(error);
+    }
+}
+
+exports.update = async (req, res, next) => {
+
+    try{
+
+        const {id} = req.params;
+        const result = await updateUserService(id, req.body);
+
+        res.status(200).json({
+            success: true,
+            message: "User updated successfully",
+        });
+
+
+
+
+    }
+    catch(error){
+        next(error);
+    }
+}
+
+exports.getDonors = async (req, res, next) => {
+    try {
+        const donors = await UserModel.find({role: 'donor', status: 'active'}).select("-password");
+        res.status(200).json({
+            success: true,
+            data: donors,
+            message: "Donors fetched successfully",
+        });
+    } catch (error) {
         next(error);
     }
 }

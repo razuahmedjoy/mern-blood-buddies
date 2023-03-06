@@ -17,3 +17,16 @@ exports.loginService = async (data) => {
     }
     return user;
 }
+
+exports.updateUserService = async (id, data) => {
+
+    const res = await UserModel.findByIdAndUpdate(id,data,{new:true,select:"-password"});
+    if(res?._id){
+
+        return res;
+    }
+    else{
+        throw new Error("User not found");
+    }
+
+}
