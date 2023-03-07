@@ -1,14 +1,14 @@
 import React from 'react';
-import {Box} from "@mui/material";
+import Hero from '../../components/Hero/Hero';
 import Navbar from '../../components/Navbar/Navbar';
 
 const Home = () => {
-    
-    return (
-      
-            <Navbar/>
-            
-  
+
+    return (<>  
+        <Hero />
+    </>
+
+
     );
 };
 

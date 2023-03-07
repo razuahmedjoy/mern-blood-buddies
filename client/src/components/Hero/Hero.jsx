@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Main = () => {
+const Hero = () => {
     return (
         <div>
-            Main
+            This is hero area
         </div>
     );
 };
 
-export default Main;
+export default Hero;

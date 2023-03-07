@@ -3,10 +3,19 @@ export const themeSettings = (mode)=>{
         palette: {
             mode: mode,
             primary: {
-              main: '#b71c1c',
+              main: '#e63946',
+              
+             
+            
             },
+
+            customBackground: {
+              default: 'linear-gradient(120deg, #e63946 0%, #E27221 100%)',
+              secondary: 'linear-gradient(180deg, #e63946 0%, #E27221 100%)',
+            },
+          
             secondary: {
-              main: '#1de0e0',
+              main: '#1d3557',
             },
             error: {
               main: '#e01d7e',

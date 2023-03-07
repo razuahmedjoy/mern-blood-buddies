@@ -11,16 +11,21 @@ import {
   List,
   ListItem,
   ListItemText,
-  Box
+  Box,
+  Container,
+  useTheme
 
 } from '@mui/material';
 import { AccountCircle, Menu as MenuIcon, LightMode, DarkMode } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleMode } from '../../features/global';
+import { Link, NavLink } from 'react-router-dom';
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const theme = useTheme();
 
   const dispatch = useDispatch();
   const { mode } = useSelector((state) => state.global);
@@ -40,13 +45,15 @@ const Navbar = () => {
   const toggleTheme = () => {
     dispatch(toggleMode());
   }
-
   const menuItems = ['Home', 'All Donors', 'Contact', 'Blog'];
   return (
-    <AppBar position="static">
-      <Toolbar>
+    <AppBar sx={{background:theme.palette.customBackground.default}} position="static">
+      <Container>
 
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>
+   
+      <Toolbar>
+        
+        <Typography component={Link} to="/" variant="h6" sx={{ flexGrow: 1, cursor:'pointer' ,color:"white", textDecoration:"none" }}>
           Blood Buddy
         </Typography>
 
@@ -83,7 +90,7 @@ const Navbar = () => {
             id="menu-appbar"
             anchorEl={anchorEl}
             anchorOrigin={{
-              vertical: 'top',
+              vertical:'bottom',
               horizontal: 'right',
             }}
             keepMounted
@@ -97,10 +104,12 @@ const Navbar = () => {
             <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
             <MenuItem onClick={handleMenuClose}>My account</MenuItem>
           </Menu>
-          <Button variant="outlined" color="inherit" sx={{ ml: 2 }}>
+        
+          <Button component={Link} to="/signup" variant="outlined" color="inherit" sx={{ ml: 2 }}>
             Sign up
           </Button>
-          <Button variant="contained" color="dark" sx={{ ml: 2 }}>
+        
+          <Button component={Link} to="/login" variant="contained" color="dark" sx={{ ml: 2 }}>
             Login
           </Button>
         </Box>
@@ -132,6 +141,7 @@ const Navbar = () => {
       
         </List>
       </Drawer>
+      </Container>
     </AppBar>
   );
 };
