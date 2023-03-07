@@ -9,7 +9,7 @@ exports.signup = async (req, res, next) => {
         return next(new Error("Email Password and BloodGroup are required"));
     }
     try {
-        const user = await signUpService({ email, password, bloodGroup });
+        const user = await signUpService({ ...req.body });
 
         res.status(201).json({
             success: true,

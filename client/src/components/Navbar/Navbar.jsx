@@ -50,7 +50,7 @@ const Navbar = () => {
   }
   const menuItems = ['Home', 'All Donors', 'Contact', 'Blog'];
   return (
-    <AppBar sx={{ background: theme.palette.customBackground.default }} position="static">
+    <AppBar sx={{ background: theme.palette.customBackground.default }} position="fixed">
       <Container>
 
 

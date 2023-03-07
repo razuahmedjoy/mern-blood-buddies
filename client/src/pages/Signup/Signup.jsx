@@ -31,6 +31,7 @@ const bloodGroups = ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"];
 
 const Signup = () => {
 
+    const [name,setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [bloodGroup, setBloodGroup] = useState("");
@@ -44,7 +45,7 @@ const Signup = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         // console.log(email, password, bloodGroup)
-        register({ email, password, bloodGroup })
+        register({ email, password, bloodGroup, name })
 
     }
     const { isLoading, isError, isSuccess, error } = response;
@@ -113,10 +114,20 @@ const Signup = () => {
 
                     }}
                 >
-                    <Typography variant="h4" p={2} sx={{ fontWeight: "bold" }}>Create account</Typography>
+                  
                     <CardContent>
+                    <Typography variant="h4"  sx={{ fontWeight: "bold" }}>Create account</Typography>
                         <form onSubmit={handleSubmit}>
 
+                            <TextField
+                                required
+                                onChange={(e) => setName(e.target.value)}
+                                fullWidth
+                                value={name}
+                                label="Name"
+                                type="text"
+                                margin="normal"
+                                variant="standard" />
                             <TextField
                                 required
                                 onChange={(e) => setEmail(e.target.value)}

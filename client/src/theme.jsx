@@ -15,7 +15,8 @@ export const themeSettings = (mode)=>{
             },
           
             secondary: {
-              main: '#1d3557',
+              main: mode === 'light' ? '#E27221' : '#fff',
+              
             },
             error: {
               main: '#e01d7e',
@@ -24,7 +25,7 @@ export const themeSettings = (mode)=>{
               main: '#1de01d',
             },
             dark:{
-              main: '#000000',
+              main: '#010313',
             }
           },
     }

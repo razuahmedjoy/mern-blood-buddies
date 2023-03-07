@@ -1,11 +1,16 @@
 import React from 'react';
 import Hero from '../../components/Hero/Hero';
-import Navbar from '../../components/Navbar/Navbar';
+import LatestDonors from '../../components/LatestDonors/LatestDonors';
+import SectionTitle from '../../components/SectionTitle/SectionTitle';
 
 const Home = () => {
 
-    return (<>  
+    return (<>
         <Hero />
+
+       <SectionTitle title="Latest Donors"/>
+
+        <LatestDonors />
     </>
 
 
