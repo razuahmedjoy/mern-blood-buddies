@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    mode:"light",
-    user:null
+    mode:localStorage.getItem("theme") || "light",
+ 
 }
 
 export const globalSlice = createSlice({
@@ -10,6 +10,7 @@ export const globalSlice = createSlice({
     initialState,
     reducers:{
         toggleMode:(state)=>{
+            localStorage.setItem("theme",state.mode === "light" ? "dark" : "light");
             state.mode = state.mode === "light" ? "dark" : "light";
         }
     }
@@ -17,6 +18,6 @@ export const globalSlice = createSlice({
 })
 
 
-export const {toggleMode} = globalSlice.actions;
+export const {toggleMode,setModefromStorage} = globalSlice.actions;
 
 export default globalSlice.reducer;

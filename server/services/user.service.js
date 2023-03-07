@@ -1,6 +1,11 @@
 const UserModel = require("../models/User.model");
 
 exports.signUpService = async (data) => {
+
+    const isExist = await UserModel.findOne({ email: data.email });
+    if (isExist) {
+        throw new Error("User already exists");
+    }
    
     const user = await UserModel.create(data);   
     return user;

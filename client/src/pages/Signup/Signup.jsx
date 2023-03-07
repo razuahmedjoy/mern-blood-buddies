@@ -14,10 +14,18 @@ import {
     Typography,
     useTheme,
     Container,
-    Card
+    Card,
+    Divider
 } from "@mui/material";
-import { useState } from "react";
+import { LoadingButton } from '@mui/lab';
+import { useEffect, useState } from "react";
 import signUpimage from "../../assets/signup.svg";
+import { useRegisterMutation } from "../../features/auth/authApi";
+import { toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
+import { FacebookRounded, Google } from "@mui/icons-material";
+import SocialLogin from "../../components/SocialLogin";
+import { useSelector } from "react-redux";
 
 const bloodGroups = ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"];
 
@@ -26,11 +34,39 @@ const Signup = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [bloodGroup, setBloodGroup] = useState("");
+    const [errorTxt, setErrorTxt] = useState(null);
+
+    const {user} = useSelector((state) => state.auth)
+    const navigate = useNavigate()
+
+    const [register, response] = useRegisterMutation()
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(email, password, bloodGroup)
+        // console.log(email, password, bloodGroup)
+        register({ email, password, bloodGroup })
+
     }
+    const { isLoading, isError, isSuccess, error } = response;
+    // console.log(response);
+
+    useEffect(() => {
+        if (isSuccess) {
+            toast.success("Account created successfully");
+            navigate("/login")
+        }
+        if (isError) {
+            // console.log(error)
+            setErrorTxt(error?.data?.message)
+        }
+        if(user){
+            navigate("/profile")
+        }
+
+
+    }, [isLoading, isSuccess, isError, error, navigate,user])
+
+
     return (
         <Box
             sx={{
@@ -104,7 +140,7 @@ const Signup = () => {
                                 <InputLabel variant="standard">Blood Group</InputLabel>
 
                                 <Select
-                                   
+
                                     onChange={(e) => setBloodGroup(e.target.value)}
                                     value={bloodGroup}
                                     label="Bloog Group"
@@ -133,15 +169,28 @@ const Signup = () => {
                                     </Typography>
                                 }
                             />
-                            <Button
+
+                            {isError && <Typography color="error" variant="body2" sx={{ mb: "10px" }}>{errorTxt}</Typography>}
+
+                            <LoadingButton
+                                loading={isLoading}
                                 type="submit"
                                 fullWidth
                                 variant="contained"
                                 color="primary"
                                 size="large"
+                                sx={{ my: 3 }}
                             >
                                 Sign Up
-                            </Button>
+                            </LoadingButton>
+
+                            <Divider>or login with </Divider>
+
+                            <SocialLogin/>
+                            <Typography align="center" mt="1rem">
+                                Already have an account? <Typography component={Link} to="/login" sx={{textDecoration:"none"}} color="primary">Login Now</Typography>
+
+                            </Typography>
                         </form>
                     </CardContent>
                 </Card>
